@@ -155,16 +155,6 @@ class Sorter
 
   end
 
-  # Best case: O(n log(n))
-  # Average Case: O(n log(n))
-  # Worst Case: O(n^2)
-  # Space: O(log(n))
-  def quick_sort(pivot_type = :lo)
-    reset_array_to_sort
-
-    quick_sort_recursion(array_to_sort, 0, array_to_sort.length - 1, pivot_type)
-  end
-
   private
     def print_array_to_sort
       print "\e[H\e[2J"
@@ -191,68 +181,5 @@ class Sorter
 
     def swap!(array, first_index, second_index)
       array[first_index], array[second_index] = array[second_index], array[first_index]
-    end
-
-    def partition(array, low_index, high_index)
-      pivot_index = (low_index + high_index) / 2
-      pivotValue = array[]
-      #put the chosen pivot at A[hi]
-
-      swap!(array, pivot_index, high_index)
-    end
-
-    def done_sorting?(low_index, high_index, pivot)
-      pivot == :lo ? low_index >= high_index : low_index <= high_index
-    end
-
-    def pivot_index(low_index, high_index, pivot)
-      pivot == :lo ? low_index : high_index
-    end
-
-    def quick_sort_recursion(array, low_index, high_index, pivot_type)
-      if done_sorting?(low_index, high_index, pivot_type)
-          # Done sorting
-          return array
-      end
-
-      # Take a pivot value, at the far left
-      pivot = array[pivot_index(low_index, high_index, pivot_type)]
-
-      # Min and Max pointers
-      min = low_index
-      max = high_index
-
-      # Current free slot
-      free = min
-
-      while min < max
-        if free == min # Evaluate array[max]
-          if array[max] <= pivot # Smaller than pivot, must move
-            array[free] = array[max]
-            min += 1
-            free = max
-            print_array_to_sort
-          else
-            max -= 1
-          end
-        elsif free == max # Evaluate array[min]
-          if array[min] >= pivot # Bigger than pivot, must move
-            array[free] = array[min]
-            max -= 1
-            free = min
-            print_array_to_sort
-          else
-            min += 1
-          end
-        else
-          raise "Inconsistent state"
-        end
-      end
-
-      array[free] = pivot
-      print_array_to_sort
-
-      quick_sort_recursion(array, low_index, free - 1, pivot_type)
-      quick_sort_recursion(array, free + 1, high_index, pivot_type)
     end
 end
