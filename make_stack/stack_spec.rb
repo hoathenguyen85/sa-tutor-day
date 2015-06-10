@@ -33,6 +33,11 @@ let(:a_stack) {MyStack.new(a_node)}
     it 'should return node added to stack' do
       expect(empty_stack.push(a_node)).to be(a_node)
     end
+
+    it 'should have top as the new node' do
+      empty_stack.push(a_node)
+      expect(empty_stack.top).to be(a_node)
+    end
   end
 
   context '#pop' do
